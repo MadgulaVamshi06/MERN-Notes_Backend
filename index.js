@@ -17,14 +17,16 @@ connectDB();
 // rest object
 const app = express();
 
+
+
 const allowedOrigins = [
-  "https://mern-notes-ro1m.vercel.app/",
-  "http://127.0.0.1:5173"
+  "https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/",
+  "http://localhost:5173"
 ];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
@@ -32,8 +34,10 @@ const corsOptions = {
   },
   methods: ["POST", "GET", "DELETE", "PUT"],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
+  credentials: true // only if you're using cookies or auth headers
 };
+
 
 app.use(cors(corsOptions));
 app.use(morgan('dev'));
@@ -49,13 +53,10 @@ app.get("/", (req, res) => {
 });
 
 const PORT = 8000;
-// app.listen(PORT, () => {
-//   console.log(`Server is running in ${process.env.DEV_MODE} mode on ${PORT}`.bgCyan.white);
-// });
-
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running in ${process.env.DEV_MODE} mode on ${PORT}`.bgCyan.white);
 });
+
 
 
 
