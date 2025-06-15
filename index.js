@@ -49,10 +49,13 @@ app.get("/", (req, res) => {
 });
 
 const PORT = 8000;
-app.listen(PORT, () => {
-  console.log(`Server is running in ${process.env.DEV_MODE} mode on ${PORT}`.bgCyan.white);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running in ${process.env.DEV_MODE} mode on ${PORT}`.bgCyan.white);
+// });
 
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});
 
 
 
