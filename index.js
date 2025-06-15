@@ -18,7 +18,7 @@ connectDB();
 const app = express();
 
 const allowedOrigins = [
-  "https://jumia-clone-0.vercel.app",
+  "https://mern-notes-ro1m.vercel.app/",
   "http://127.0.0.1:5173"
 ];
 
