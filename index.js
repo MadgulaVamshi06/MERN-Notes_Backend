@@ -1,4 +1,3 @@
-/* === File: index.js === */
 const express = require("express");
 const colors = require("colors");
 const dotenv = require("dotenv");
@@ -18,46 +17,42 @@ connectDB();
 const app = express();
 
 
-
 const allowedOrigins = [
-  "http://localhost:5173", 
-  "https://mern-notes-ro1m.vercel.app" 
+  "http://localhost:5173",
+  "https://mern-notes-frontend.vercel.app" 
 ];
 
-
+// CORS options
 const corsOptions = {
   origin: function (origin, callback) {
-
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true, // ✅ allow cookies or auth headers
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 };
 
 app.use(cors(corsOptions));
-app.use(morgan('dev'));
+app.options("*", cors(corsOptions)); 
+app.use(morgan("dev"));
 app.use(express.json());
 
 // routes
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/notes", noteRoute);
 
-// rest api
+// default route
 app.get("/", (req, res) => {
   res.send({ message: "Welcome to Note" });
 });
 
-const PORT = 8000;
-app.listen(PORT, () => {
-  console.log(`Server is running in ${process.env.DEV_MODE} mode on ${PORT}`.bgCyan.white);
-});
+if (process.env.NODE_ENV !== "production") {
+  const port = process.env.PORT || 8000;
+  app.listen(port, () => console.log(`Server running on ${port}`));
+}
 
-
-
-
-
+module.exports = app;
