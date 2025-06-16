@@ -20,7 +20,7 @@ const app = express();
 
 
 const allowedOrigins = [
-  "https://mern-notes-backend-git-main-madgula-vamshis-projects.vercel.app/",
+  "https://mern-notes-backend-sooty.vercel.app/",
   "http://localhost:5173"
 ];
 
