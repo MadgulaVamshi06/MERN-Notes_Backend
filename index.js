@@ -21,7 +21,7 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173", 
-  "https://mern-notes-ro1m.vercel.app/" 
+  "https://mern-notes-ro1m.vercel.app" 
 ];
 
 
