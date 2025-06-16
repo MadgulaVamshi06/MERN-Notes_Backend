@@ -20,24 +20,24 @@ const app = express();
 
 
 const allowedOrigins = [
-  "https://mern-notes-backend-sooty.vercel.app/",
-  "http://localhost:5173"
+  "http://localhost:5173", 
+  "https://mern-notes-ro1m.vercel.app/" 
 ];
+
 
 const corsOptions = {
   origin: function (origin, callback) {
+
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  methods: ["POST", "GET", "DELETE", "PUT"],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  optionsSuccessStatus: 200,
-  credentials: true // only if you're using cookies or auth headers
+  credentials: true, // ✅ allow cookies or auth headers
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 };
-
 
 app.use(cors(corsOptions));
 app.use(morgan('dev'));
