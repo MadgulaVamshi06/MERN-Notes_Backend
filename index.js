@@ -7,23 +7,18 @@ const authRoute = require("./routes/authRoute");
 const noteRoute = require("./routes/noteRoute");
 const cors = require("cors");
 
-// configure env
 dotenv.config();
-
-// database config
 connectDB();
 
-// rest object
 const app = express();
 
-
+// === CORS CONFIG ===
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://mern-notes-frontend.vercel.app" 
+  "https://mern-notes-ro1m.vercel.app"
 ];
 
-// CORS options
-const corsOptions = {
+app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
@@ -31,25 +26,22 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
+  credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-};
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
-app.use(cors(corsOptions));
-app.options("*", cors(corsOptions)); 
 app.use(morgan("dev"));
 app.use(express.json());
 
-// routes
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/notes", noteRoute);
 
-// default route
 app.get("/", (req, res) => {
   res.send({ message: "Welcome to Note" });
 });
 
+// Only for local server start (not in Vercel)
 if (process.env.NODE_ENV !== "production") {
   const port = process.env.PORT || 8000;
   app.listen(port, () => console.log(`Server running on ${port}`));
